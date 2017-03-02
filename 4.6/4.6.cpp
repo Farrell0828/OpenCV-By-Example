@@ -8,7 +8,6 @@ void Cartoon(Mat img);
 
 int main()
 {
-
 	// ╪стьм╪ф╛нд╪Ч
 	String imgFile = "C:\\Users\\mengf\\Pictures\\Work Pictures\\lena.jpg";
 	//String imgFile = "C:\\Users\\mengf\\Pictures\\Test Image\\piston.jpg";
