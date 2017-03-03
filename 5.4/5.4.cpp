@@ -10,6 +10,7 @@ const String file_path = "C:\\Users\\mengf\\Pictures\\Test Image\\";
 
 Mat RemoveLight(Mat img, Mat pattern, int method);
 Mat CalculateLightPattern(Mat img);
+void ConnectedComponents(Mat img);
 
 int main()
 {
@@ -63,11 +64,11 @@ int main()
 
 	// 为分割图像，先二值化
 	Mat img_thr;
-	if (method_light != 2)
+	// if (method_light != 2)
 	{
 		threshold(removed0, img_thr, 30, 255, THRESH_BINARY);
 	}
-	else
+	// else
 	{
 		threshold(removed0, img_thr, 140, 255, THRESH_BINARY_INV);
 	}
@@ -102,4 +103,27 @@ Mat CalculateLightPattern(Mat img)
 	// 用基本和有效的方法来计算图像光纹
 	blur(img, pattern, Size(img.cols / 3, img.cols / 3));
 	return pattern;
+}
+
+void ConnectedComponents(Mat img)
+{
+	Mat labels;
+	int num_objects = connectedComponents(img, labels);
+	if (num_objects < 2)
+	{
+		cout << "No objects detected" << endl;
+		return;
+	}
+	else
+	{
+		cout << "Number of objects detected: " << num_objects - 1 << endl;
+	}
+	Mat output = Mat::zeros(img.rows, img.cols, CV_8UC3);
+	RNG rng(0xFFFFFFFF);
+	for (int i = 1; i < num_objects; i++)
+	{
+		Mat mask = (labels == i);
+		// output.setTo(randomColor(rng), mask);
+	}
+	imshow("Result", output);
 }
